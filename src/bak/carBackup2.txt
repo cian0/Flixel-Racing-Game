@@ -1,0 +1,140 @@
+package
+
+{
+
+	import org.flixel.*;
+
+	public class RacingCar extends FlxSprite
+
+	
+	{
+		[Embed(source='assets/playerCar.png')]
+
+		protected var ImgPlayer:Class;
+		public var power:int = 50; // added speed per frame
+		public var backSpeed:int = -10; // speed when on reverse
+		public var speed:int = 0; // pixels per frame
+		public var friction:Number = 0.95; // % of the actual speed every frame.
+		public var thrust:Number = 0.75; // % of power every frame (during keystroke)
+		public var speedDecay:Number = 0.95; // % of speed per frame when reaching speedlimit
+		public var maxSpeed:int = 500;
+		public var assumedAngle:Number;
+		public var origFriction:Number = friction;
+		public var rotationStep:int = 2;
+		public var skid:Number = 0.99;
+		public var breakStrength:Number = 0.9; // % of the break's strength
+		private var actualAngle:Number; // this can be used to attach a hittest object
+		
+		public function RacingCar(X:Number,Y:Number):void
+
+		{
+			super(X, Y);
+			loadGraphic(ImgPlayer, true, true, 90, 80);
+			//makeGraphic(90, 80);
+			this.scale.x = .7;
+			this.scale.y = .7;
+			
+			//this.drag = new FlxPoint(20, 20);
+			//this.acceleration.y = 30*9.6;
+			assumedAngle = 0;
+			this.frame = 24;
+		}
+		
+		override public function update():void
+		{
+			if(FlxG.keys.UP)
+			{
+				//velocity.y -= power * thrust;
+				speed += power * thrust;
+				
+			}
+			else if(FlxG.keys.DOWN)
+			{
+				//velocity.y += power * thrust;
+				if (speed > 7) {
+					speed *= breakStrength;
+					trace ("breakStrength");
+				}else {
+					trace ("backSpeed");
+					speed += backSpeed;
+				}
+				
+			}else {
+				
+			}
+			
+			if (Math.abs(speed)>maxSpeed) {
+				speed *= speedDecay;
+				//trace (speed);
+			}
+			
+			
+			if(FlxG.keys.LEFT)
+			{
+				//velocity.x -= power;
+				carAngle += rotationStep  * (speed / maxSpeed);
+				friction = skid;
+				//speed *= speedDecay;
+			}
+			else if(FlxG.keys.RIGHT)
+			{
+				//velocity.x += power;
+				carAngle -= rotationStep * (speed / maxSpeed);
+				//speed *= speedDecay;
+				friction = skid;
+			}else {
+				friction = origFriction;
+			}
+			
+			if ((FlxG.keys.RIGHT || FlxG.keys.LEFT)&&!FlxG.keys.UP)
+				friction = skid;
+			else if ((FlxG.keys.RIGHT || FlxG.keys.LEFT) && FlxG.keys.UP){
+				friction = skid - 0.03;	
+				trace('a');
+			}
+			else {
+				friction = origFriction;
+			}
+			
+			if (FlxG.keys.DOWN)
+				speed *= friction - .1;
+			else
+				speed *= friction;
+			
+			
+			//this.angle = carAngle * -1 ;// -270;
+			actualAngle = carAngle * -1 + 90;
+			velocity.x = Math.sin(actualAngle *(Math.PI/180))*speed;
+			velocity.y = Math.cos(actualAngle * (Math.PI / 180)) * speed * -1;
+			//trace(speed);
+			//velocity.x *= friction;
+			//velocity.y *= friction;
+			
+			super.update();
+		}
+		public function set carAngle( val:Number ):void {
+			if (val >= 360) {
+				val = val % 360;
+			}else if (val < 0) {
+				val = 360 + val;
+			}
+			
+			assumedAngle = val;
+			
+			var currentFrame:Number = (((actualAngle+360) / 11.25)+16)% 32;
+			//currentFrame = 32 - currentFrame;
+			//trace (currentFrame);
+			if (currentFrame == 0 && assumedAngle > 270) {
+				currentFrame = 31;
+				
+			}else if (currentFrame == 0 && assumedAngle < 270) {
+				currentFrame = 1;
+			}
+			
+			this.frame = currentFrame;
+		}
+		public function get carAngle():Number {
+			return assumedAngle;
+		}
+	}
+}
