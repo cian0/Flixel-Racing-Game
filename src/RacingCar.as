@@ -53,6 +53,8 @@ package
 			velocity.x = 0;
 			velocity.y = 0;
 			this.frame = 24;
+			
+			
 		}
 		public function setHitArea(newHitArea:FlxSprite):void {
 			this.hitArea = newHitArea;

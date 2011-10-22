@@ -55,6 +55,7 @@ package
 		public var skidding:Boolean = false;
 		public var turnskidding:Boolean = false;
 		public var skids:Number = 1;
+		public var angleRad:Number = 1.5609317684435;
 		public function CarTemplate() 
 		{
 			// start angle of car in radians
