@@ -4,91 +4,120 @@ package
 
 	import org.flixel.*;
 
-	public class RacingCar extends Car
+	public class RacingCar extends FlxSprite
 
 	
 	{
 		[Embed(source='assets/playerCar.png')]
-		
+
 		protected var ImgPlayer:Class;
-		public var assumedAngle:Number;
 		
-		
+		private var assumedAngle:Number;
+		private var speed:Number;
+		private var speedDecay:Number;
+		private var rotationStep:Number;
+		private var maxSpeed:Number;
+		private var backSpeed:Number;
+		private var speedX:Number;
+		private var speedY:Number;
+		private var logThis:Number;
+		private var hitArea:FlxSprite = null;
+		/*
+		 * let's add skidding
+		 * 
+		 * */
+		public var skid:Number = .01;
+		public var skidForceX:Number;
+		public var skidForceY:Number;
+		public var perpendicularForce:Number;
+		private var toRad:Number = Math.PI / 180;
 		
 		public function RacingCar(X:Number,Y:Number):void
 
 		{
 			super(X, Y);
-			//loadGraphic(ImgPlayer, true, true, 90, 80);
-			//makeGraphic(90, 80);
-			this.scale.x = .7;
-			this.scale.y = .7;
-			//this.frame = 24;
-			//this.alpha = 0;
+			loadGraphic(ImgPlayer, true, true, 90, 80);
+						
 			
-			super.makeGraphic(63 - 25, 56 - 3, 0xdeff1da9);
+			
+			logThis = 0;
+			this.angle = 0;
+			acceleration = new FlxPoint(10, 2);
+			speedDecay = .97;
+			this.drag = new FlxPoint(5,0);
+			rotationStep = 3;
+			maxSpeed = 1000;
+			backSpeed = 70;
+			assumedAngle = (this.angle % 360) * -1 ;
+			speed = 0;
+			velocity.x = 0;
+			velocity.y = 0;
+			this.frame = 24;
 		}
-		
+		public function setHitArea(newHitArea:FlxSprite):void {
+			this.hitArea = newHitArea;
+		}
 		override public function update():void
 		{
-			if(FlxG.keys.UP){
-				this.accel=1
+			if (speed > 5) {
+				speed *= speedDecay;
+				//trace (speed);
+			} else {
+				speed = 0;
 			}
-			if(FlxG.keys.DOWN){
+			
+			if (assumedAngle >= 360 || assumedAngle <= -360)
+				assumedAngle = assumedAngle % 360;
 				
-				trace();
-				if (this.accel > 0) {
-					this.realFriction = 0;
-					//this.accel = -5;
-					trace ('here');
-				}else{
-					//this.accel = -.5;
-					trace ('here2');
-				}
+			if (assumedAngle < 0)
+				assumedAngle = 360 + assumedAngle;
+			
+			if(FlxG.keys.UP && speed < maxSpeed)
+			{
+				speed += acceleration.x;
 			}
-			if(FlxG.keys.RIGHT){
-				this.rotAccel = 1
+			else if(FlxG.keys.DOWN)
+			{
+				speed -= backSpeed;
 			}
-			if(FlxG.keys.LEFT){
-				this.rotAccel = -2
+			FlxG.log(speed);
+			if(FlxG.keys.LEFT && speed > 50)
+			{
+				assumedAngle += rotationStep * (speed / maxSpeed);
 			}
-			if (!FlxG.keys.LEFT && !FlxG.keys.UP && !FlxG.keys.RIGHT && !FlxG.keys.DOWN ) {
-				//this.rotAccel = 0;
-				this.rotationMult = 0;
-				//trace ('here');
-			}else {
-				this.rotationMult = 0.4;
+			else if(FlxG.keys.RIGHT && speed > 50)
+			{
+				assumedAngle -= rotationStep * (speed / maxSpeed);
+			}
+			
+			/*
+			velocity.x = Math.sin((this.angle+90) * (Math.PI / 180)) * speed;
+			velocity.y = Math.cos((this.angle+90) * (Math.PI / 180)) * speed * -1;
+			*/
+			//var angleByStep:int = assumedAngle - (assumedAngle % 33);
+			velocity.x = Math.sin((360 - assumedAngle ) * (Math.PI / 180)) * speed;
+			velocity.y = Math.cos((360 - assumedAngle ) * (Math.PI / 180)) * speed * -1;
+			
+			//xComp = -Math.sin( -this.angle * toRad);
+			
+			var xComp:Number = -Math.sin( this.assumedAngle * toRad);
+			var yComp:Number = -Math.cos( this.assumedAngle * toRad);
+			perpendicularForce = -yComp * velocity.x + xComp * velocity.y;
+			//trace (Math.abs(this.perpendicularForce) + "a");
+			//this.angle = (assumedAngle) * -1;
+			
+			//this.frame = Math.abs(Math.ceil(this.angle % 32))+10;
+			var currentFrame:int = ((assumedAngle + 180) / 11) % 33;
+			currentFrame = 32 - currentFrame;
+			
+			//trace ("aaa"+this.acceleration.x);
+			this.frame = currentFrame;
+			
+			if (this.hitArea != null) {
+				trace (assumedAngle);
+				this.hitArea.angle = assumedAngle*-1;
 			}
 			super.update();
-			//this.rotAccel = 0;
 		}
-		/*
-		
-		public function set carAngle( val:Number ):void {
-			if (val >= 360) {
-				val = val % 360;
-			}else if (val < 0) {
-				val = 360 + val;
-			}
-			
-			assumedAngle = val;
-			
-			var currentFrame:Number = (((actualAngle+360) / 11.25)+16)% 32;
-			//currentFrame = 32 - currentFrame;
-			//trace (currentFrame);
-			if (currentFrame == 0 && assumedAngle > 270) {
-				currentFrame = 31;
-				
-			}else if (currentFrame == 0 && assumedAngle < 270) {
-				currentFrame = 1;
-			}
-			
-			this.frame = currentFrame;
-		}
-		public function get carAngle():Number {
-			return assumedAngle;
-		}
-		
-		*/
 	}
 }

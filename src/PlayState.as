@@ -42,6 +42,7 @@ package
 				player.mass = 0;
 				trace (player.x + "plus" + player.y);
 				add (playerHitArea);
+				player.setHitArea (playerHitArea);
 				FlxGroup.ASCENDING;
 			}
 			if (sprite is Obstacle2 || sprite is RoadBlocks) {

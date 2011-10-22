@@ -15,13 +15,14 @@ package
 		public var rotSpeed:Number = 0;
 		public var speed:Number = 0;
 		
-		public var skid:Number = .05;				//controls how slippery the car is (1 is no friction, 0 full friction)
+		public var skid:Number = .01;				//controls how slippery the car is (1 is no friction, 0 full friction)
 		public var realFriction:Number = .05;		//no need to change
 		
-		public var skidStartThreshold:Number = 5;	//how much the car must be skidding (moving perpendicularly to the direction its facing) in order to call it a skid
-		public var skidStopThreshold:Number = 3;	// " " " " ... to stop skidding (the lower the more it skids)
+		public var skidStartThreshold:Number = 3;	//how much the car must be skidding (moving perpendicularly to the direction its facing) in order to call it a skid
+		public var skidStopThreshold:Number = 3.5;	// " " " " ... to stop skidding (the lower the more it skids)
 		public var skidFrictionMult:Number = .5;	//how much more slippery the wheels will be after they 'caught' and dynamic friction takes over
 
+		//aas
 		public var xComp:Number;
 		public var yComp:Number;
 		private var toRad:Number = Math.PI / 180;
@@ -40,13 +41,15 @@ package
 			yComp = -Math.cos( -this.angle * toRad);
 			perpForce = -yComp * xSpeed + xComp * ySpeed;
 			
-			
+			trace (perpForce);
 			if(!skidding){
 				if (Math.abs(perpForce) > skidStartThreshold) {
+					trace ("stopskid");
 					stopSkidding();
 				}
 			}else {
 				if (Math.abs(perpForce) < skidStopThreshold) {
+					trace ("startskid");
 					startSkidding();
 				}
 			}

@@ -17,9 +17,7 @@ package
 		public function FlixelGame()
 
 		{
-
 			super(800,600,MenuState,1);
-
 		}
 
 	}
