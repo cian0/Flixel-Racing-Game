@@ -16,6 +16,7 @@ package
 		protected var playerGraphic:PlayerGraphic;
 		public function PlayState():void {
 			obstacleGroup = new FlxGroup();
+			FlxG.debug = false;
 		}
 		override public function create():void
 
@@ -53,14 +54,15 @@ package
 			}
 			FlxG.overlap(obstacleGroup, player, obstacleHit);
 			
-			//FlxG.collide(obstacleGroup, player);
+			FlxG.collide(obstacleGroup, player);
+			
 		}
 		
 		private function obstacleHit(obstacle:FlxSprite, player:FlxSprite):void {
 			
 			trace ('hit');
-			RacingCar(player).xSpeed *= 0.9;
-			RacingCar(player).ySpeed *= 0.9;
+			RacingCar(player).xSpeed *= -0.9;
+			RacingCar(player).ySpeed *= -0.9;
 		}
 
 	}
