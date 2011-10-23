@@ -4,8 +4,9 @@ package ph.com.topgear.car
 	import ph.com.topgear.car.*;
 	public class PlayerCar extends CarTemplate
 	{
-		private var carAccel:Number = 0.25;
-		private var carDecel:Number = -0.1;
+		private var carAccel:Number = 0.45;
+		private var carDecel:Number = -0.3;
+		
 		public function PlayerCar(myX:Number , myY:Number, w:Number = 30, h:Number = 50 ) 
 		{
 			super(myX  , myY, w, h); // this will be the main moving car
@@ -17,10 +18,19 @@ package ph.com.topgear.car
 			accel = 0;
 			rotAccel = 0;
 			if (FlxG.keys.UP && !FlxG.keys.SPACE) {
-				accel = carAccel;
+				if (!sand){
+					accel = carAccel;
+				}else {
+					accel = carAccel * sandDrag;
+				}
 			}
 			if (FlxG.keys.DOWN && !FlxG.keys.SPACE) {
-				accel = carDecel;
+				if (!sand){
+				
+					accel = carDecel;
+				}else {
+					accel = carDecel * sandDrag;
+				}
 			}
 			if (FlxG.keys.RIGHT) {
 				rotAccel = 1.7;

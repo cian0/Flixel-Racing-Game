@@ -17,8 +17,10 @@ package ph.com.topgear.car
 		public var rotAccel:Number = 0;
 		public var rotSpeed:Number = 0;
 		
+		public var sandDrag:Number = 0.2;
 		public var skid:Number = 0.3; //how much it skids
 		public var realFriction:Number = skid;
+		public var sand:Boolean = false;
 		public var skidStartThreshold:Number = 2.5;
 		public var skidStopThreshold:Number = 2;
 		public var skidFrictionMult:Number = 0.5;
@@ -71,15 +73,24 @@ package ph.com.topgear.car
 			
 			xSpeed += accel * xComp * realFriction;
 			ySpeed += accel * yComp * realFriction;
+			
 			if (!hasTested) {
 				hasTested = true;
 				
 			}
 			speed = Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed);
-			rotSpeed += rotAccel * (speed / 7);
 			
-			if (FlxG.keys.RIGHT || FlxG.keys.LEFT)
+			rotSpeed += rotAccel * (speed / 7);
+			//trace (rotSpeed);
+
+			if (FlxG.keys.RIGHT)
 				angle += rotSpeed;
+			else if (FlxG.keys.LEFT) {
+				
+				angle -= Math.abs (rotSpeed);
+			}
+			//else if (FlxG.keys.LEFT)
+				//angle -= rotSpeed;
 			this.x += xSpeed;
 			this.y += ySpeed;
 			
