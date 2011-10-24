@@ -17,18 +17,21 @@ package ph.com.topgear.car
 		public var rotAccel:Number = 0;
 		public var rotSpeed:Number = 0;
 		
-		public var sandDrag:Number = 0.2;
+		public var sandDrag:Number = 0.1;//orig 0.2
 		public var skid:Number = 0.3; //how much it skids
 		public var realFriction:Number = skid;
 		public var sand:Boolean = false;
-		public var skidStartThreshold:Number = 2.5;
+		public var skidStartThreshold:Number = 0.79;//orig 0.8
 		public var skidStopThreshold:Number = 2;
 		public var skidFrictionMult:Number = 0.5;
-		
+		protected var isPlayer:Boolean = false;
+		private var xComp:Number;
+		private var yComp:Number;
+		private var lastAngle:Number;
 		public function CarTemplate(myX:Number , myY:Number, w:Number = 30, h:Number = 50 ) 
 		{
 			super(myX  , myY );
-			angle = 180;
+			//angle = 180;
 			
 			this.makeGraphic(w, h, 0xdeff1da9);
 			if (FlxG.debug)
@@ -45,23 +48,26 @@ package ph.com.topgear.car
 			skidding = false;
 		}
 		private function addSkidMarks():void {
-			trace ("skid marks!!!");
+			FlxG.log ("skid marks!!!");
 		}
 		override public function update():void
 		{
-			var xComp:Number = -Math.sin( -angle * toRad);
-			var yComp:Number = -Math.cos( -angle * toRad);
+			xComp = -Math.sin( -angle * toRad);
+			yComp = -Math.cos( -angle * toRad);
 			perpendicularForce = -yComp * xSpeed + xComp * ySpeed;
-			
+			//trace (Math.abs(perpendicularForce) + " || " + skidStartThreshold);
+			//if (Math.abs(perpendicularForce) > skidStartThreshold)
+			//	trace (Math.abs(perpendicularForce));
 			if (!skidding) {
-				
 				if (Math.abs(perpendicularForce) > skidStartThreshold) {
 					stopSkidding();
+					
 				}
 			}else{
 				addSkidMarks();
 				if (Math.abs(perpendicularForce) < skidStopThreshold) {
 					startSkidding();
+					
 				}
 			}
 			var skidForceX:Number = -yComp * perpendicularForce;
@@ -81,19 +87,20 @@ package ph.com.topgear.car
 			speed = Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed);
 			
 			rotSpeed += rotAccel * (speed / 7);
-			//trace (rotSpeed);
-
-			if (FlxG.keys.RIGHT)
-				angle += rotSpeed;
-			else if (FlxG.keys.LEFT) {
-				
-				angle -= Math.abs (rotSpeed);
+			
+			if (isPlayer) {
+				//if (!skidding)
+					if (Math.round(speed + 0.2) > 0)
+						if (FlxG.keys.RIGHT)
+							angle += rotSpeed;
+						else if (FlxG.keys.LEFT) 
+							angle -= Math.abs (rotSpeed);			
+				//else	
+					//angle += rotSpeed;
 			}
-			//else if (FlxG.keys.LEFT)
-				//angle -= rotSpeed;
 			this.x += xSpeed;
 			this.y += ySpeed;
-			
+			lastAngle = angle;
 			super.update();
 			accel = 0;
 			rotAccel = 0;
@@ -105,6 +112,8 @@ package ph.com.topgear.car
 				rotSpeed = 0;
 			else
 				rotSpeed = 0.4 * (1 - realFriction);
+				
+			
 			
 		}
 	}

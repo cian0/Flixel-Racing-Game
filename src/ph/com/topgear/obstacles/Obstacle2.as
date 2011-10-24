@@ -1,5 +1,4 @@
-package
-
+package ph.com.topgear.obstacles
 {
 
 	import org.flixel.*;
@@ -7,15 +6,15 @@ package
 	public class Obstacle2 extends FlxSprite
 
 	{
-		[Embed(source='assets/32x32.png')]
+		[Embed(source='../../../../assets/32x32.png')]
 
-		protected var ImgPlayer:Class;
+		protected var ImgObstacle2:Class;
 		
 		public function Obstacle2(X:Number,Y:Number):void
 
 		{
 			super(X, Y);
-			loadGraphic(ImgPlayer, true, true, 32, 32);
+			loadGraphic(ImgObstacle2, true, true, 32, 32);
 		}
 		
 		override public function update():void

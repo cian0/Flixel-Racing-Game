@@ -37,8 +37,6 @@ package
 		//Sprites
 		public var playerGroupraceCarGroup:FlxGroup = new FlxGroup;
 		public var obstaclesGroupobstacle1Group:FlxGroup = new FlxGroup;
-		public var obstaclesGroupLapsGroup:FlxGroup = new FlxGroup;
-		public var obstaclesGroupstartGroup:FlxGroup = new FlxGroup;
 
 
 		public function Level_Road1(addToStage:Boolean = true, onAddSpritesCallback:Function = null)
@@ -104,16 +102,12 @@ package
 			masterLayer.add(layerracingTrackGroup3road64x96_1);
 			masterLayer.add(playerGroupraceCarGroup);
 			masterLayer.add(obstaclesGroupobstacle1Group);
-			masterLayer.add(obstaclesGroupLapsGroup);
-			masterLayer.add(obstaclesGroupstartGroup);
 
 
 			if ( addToStage )
 			{
 				addSpritesForLayerplayerGroupraceCar(onAddSpritesCallback);
 				addSpritesForLayerobstaclesGroupobstacle1(onAddSpritesCallback);
-				addSpritesForLayerobstaclesGroupLaps(onAddSpritesCallback); // laps
-				addSpritesForLayerobstaclesGroupstart(onAddSpritesCallback); // start
 				FlxG.state.add(masterLayer);
 			}
 
@@ -128,44 +122,43 @@ package
 
 		override public function addSpritesForLayerplayerGroupraceCar(onAddCallback:Function = null):void
 		{
-			addSpriteToLayer(RacingCar, playerGroupraceCarGroup , 877.000, 384.000, 0.000, false, 1, 1, onAddCallback );//"raceCar"
+			addSpriteToLayer(RacingCar, playerGroupraceCarGroup , 307.000, 193.000, 0.000, false, 1, 1, onAddCallback );//"raceCar"
 		}
 
 		override public function addSpritesForLayerobstaclesGroupobstacle1(onAddCallback:Function = null):void
 		{
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 492.000, 45.000, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 460.905, 41.208, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 429.810, 37.416, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 400.902, 41.817, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 375.832, 60.600, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 350.763, 79.384, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 325.694, 98.167, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 300.624, 116.950, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 275.555, 135.734, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 250.485, 154.517, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 225.416, 173.300, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 200.347, 192.083, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 175.277, 210.867, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 150.208, 229.650, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 125.139, 248.433, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 100.069, 267.217, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 247.189, 156.986, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 222.591, 175.417, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 197.992, 193.847, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 173.394, 212.278, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 148.795, 230.708, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 124.197, 249.139, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 99.598, 267.569, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
 			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 75.000, 286.000, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
-		}
-
-		override public function addSpritesForLayerobstaclesGroupLaps(onAddCallback:Function = null):void
-		{
-			addSpriteToLayer(Checkpoint, obstaclesGroupLapsGroup , 1071.000, 325.000, 0.000, false, 1, 1, onAddCallback );//"checkpoint"
-			addSpriteToLayer(Checkpoint, obstaclesGroupLapsGroup , 1344.000, 676.000, 0.000, false, 1, 1, onAddCallback );//"checkpoint"
-			addSpriteToLayer(Checkpoint, obstaclesGroupLapsGroup , 1303.000, 1187.000, 0.000, false, 1, 1, onAddCallback );//"checkpoint"
-			addSpriteToLayer(Checkpoint, obstaclesGroupLapsGroup , 588.000, 1099.000, 0.000, false, 1, 1, onAddCallback );//"checkpoint"
-			addSpriteToLayer(Checkpoint, obstaclesGroupLapsGroup , 486.000, 651.000, 0.000, false, 1, 1, onAddCallback );//"checkpoint"
-			addSpriteToLayer(Checkpoint, obstaclesGroupLapsGroup , 64.000, 458.000, 0.000, false, 1, 1, onAddCallback );//"checkpoint"
-			addSpriteToLayer(Checkpoint, obstaclesGroupLapsGroup , 427.000, 121.000, 0.000, false, 1, 1, onAddCallback );//"checkpoint"
-		}
-
-		override public function addSpritesForLayerobstaclesGroupstart(onAddCallback:Function = null):void
-		{
-			addSpriteToLayer(Start, obstaclesGroupstartGroup , 969.000, 360.000, 0.000, false, 1, 1, onAddCallback );//"start"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 857.000, 311.000, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 832.159, 292.897, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 807.319, 274.794, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 782.478, 256.691, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 757.638, 238.588, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 732.797, 220.485, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 707.957, 202.382, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 683.116, 184.279, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 658.276, 166.176, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 633.435, 148.073, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 608.595, 129.970, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 583.754, 111.867, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 558.914, 93.764, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 534.073, 75.661, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 509.233, 57.559, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 482.655, 43.860, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 452.144, 40.140, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 421.633, 36.419, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 394.780, 46.403, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 370.182, 64.834, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 345.583, 83.264, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 320.985, 101.695, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 296.386, 120.125, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
+			addSpriteToLayer(RoadBlock, obstaclesGroupobstacle1Group , 271.788, 138.556, 0.000, false, 1, 1, onAddCallback );//"RoadBlock"
 		}
 
 

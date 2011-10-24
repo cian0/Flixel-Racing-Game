@@ -13,14 +13,15 @@ package
 	public class FlixelGame extends FlxGame
 
 	{
-
+		public static var gameStart:Boolean = false;
+		public static var currentRacingTime:String = "";
+		public static var stopTimer:Boolean= false;
 		public function FlixelGame()
-
 		{
 			//test change. 2
+			
 			super(800,600,MenuState,1);
 		}
-
 	}
 
 }

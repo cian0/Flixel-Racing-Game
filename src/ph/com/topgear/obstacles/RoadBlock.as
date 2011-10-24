@@ -1,5 +1,4 @@
-package
-
+package ph.com.topgear.obstacles
 {
 
 	import org.flixel.*;
@@ -7,15 +6,15 @@ package
 	public class RoadBlock extends FlxSprite
 
 	{
-		[Embed(source='assets/hut.png')]
+		[Embed(source='../../../../assets/hut.png')]
 
-		protected var ImgPlayer:Class;
+		protected var ImgRoadBlock:Class;
 		
 		public function RoadBlock(X:Number,Y:Number):void
 
 		{
 			super(X, Y);
-			loadGraphic(ImgPlayer, true, true, 24, 24);
+			loadGraphic(ImgRoadBlock, true, true, 24, 24);
 		}
 		
 		override public function update():void

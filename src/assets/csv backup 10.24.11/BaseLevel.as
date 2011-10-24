@@ -3,6 +3,7 @@
 package 
 {
 	import org.flixel.*;
+	import ph.com.topgear.obstacles.*;
 	public class BaseLevel
 	{
 		public var masterLayer:FlxGroup = new FlxGroup;

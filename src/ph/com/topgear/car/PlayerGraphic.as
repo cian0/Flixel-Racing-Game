@@ -11,8 +11,8 @@ package ph.com.topgear.car
 		
 		private var hasSet:Boolean = false;
 		private var hitArea:PlayerCar;
-		private var xOffSet:Number = -21;
-		private var yOffSet:Number = -3;
+		private var xOffSet:Number = -23;
+		private var yOffSet:Number = -15;
 		private var assumedAngle:Number;
 		
 		public function PlayerGraphic(target:PlayerCar):void 
@@ -31,8 +31,13 @@ package ph.com.topgear.car
 			
 			var currentFrame:int = ((assumedAngle + (180*5)) / 11) % 33;
 			currentFrame = 32 - currentFrame;
-			
+			if (currentFrame > 17)
+				currentFrame -= 1;
+			if (this.frame != currentFrame) {
+				FlxG.log (this.frame);
+			}
 			this.frame = currentFrame;
+			
 			
 			super.update();
 		}

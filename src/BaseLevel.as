@@ -3,6 +3,7 @@
 package 
 {
 	import org.flixel.*;
+	import ph.com.topgear.obstacles.*;
 	public class BaseLevel
 	{
 		public var masterLayer:FlxGroup = new FlxGroup;
@@ -35,5 +36,7 @@ package
 
 		virtual public function addSpritesForLayerplayerGroupraceCar(onAddCallback:Function = null):void { }
 		virtual public function addSpritesForLayerobstaclesGroupobstacle1(onAddCallback:Function = null):void { }
+		virtual public function addSpritesForLayerobstaclesGroupLaps(onAddCallback:Function = null):void { }
+		virtual public function addSpritesForLayerobstaclesGroupstart(onAddCallback:Function = null):void { }
 	}
 }

@@ -11,8 +11,7 @@ package
 		public function RacingCar(X:Number,Y:Number):void
 
 		{
-			super(X, Y, 45, 75);
-			
+			super(X, Y, 35, 55);
 		}
 		override public function update():void
 		{
