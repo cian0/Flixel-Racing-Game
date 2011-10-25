@@ -38,5 +38,6 @@ package
 		virtual public function addSpritesForLayerobstaclesGroupobstacle1(onAddCallback:Function = null):void { }
 		virtual public function addSpritesForLayerobstaclesGroupLaps(onAddCallback:Function = null):void { }
 		virtual public function addSpritesForLayerobstaclesGroupstart(onAddCallback:Function = null):void { }
+		virtual public function addSpritesForLayerobstaclesGroupLayer5(onAddCallback:Function = null):void { }
 	}
 }

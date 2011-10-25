@@ -39,6 +39,7 @@ package
 		public var obstaclesGroupobstacle1Group:FlxGroup = new FlxGroup;
 		public var obstaclesGroupLapsGroup:FlxGroup = new FlxGroup;
 		public var obstaclesGroupstartGroup:FlxGroup = new FlxGroup;
+		public var obstaclesGroupLayer5Group:FlxGroup = new FlxGroup;
 
 
 		public function Level_Road1(addToStage:Boolean = true, onAddSpritesCallback:Function = null)
@@ -106,14 +107,16 @@ package
 			masterLayer.add(obstaclesGroupobstacle1Group);
 			masterLayer.add(obstaclesGroupLapsGroup);
 			masterLayer.add(obstaclesGroupstartGroup);
+			masterLayer.add(obstaclesGroupLayer5Group);
 
 
 			if ( addToStage )
 			{
 				addSpritesForLayerplayerGroupraceCar(onAddSpritesCallback);
 				addSpritesForLayerobstaclesGroupobstacle1(onAddSpritesCallback);
-				addSpritesForLayerobstaclesGroupLaps(onAddSpritesCallback); // laps
-				addSpritesForLayerobstaclesGroupstart(onAddSpritesCallback); // start
+				addSpritesForLayerobstaclesGroupLaps(onAddSpritesCallback);
+				addSpritesForLayerobstaclesGroupstart(onAddSpritesCallback);
+				addSpritesForLayerobstaclesGroupLayer5(onAddSpritesCallback);
 				FlxG.state.add(masterLayer);
 			}
 
@@ -166,6 +169,17 @@ package
 		override public function addSpritesForLayerobstaclesGroupstart(onAddCallback:Function = null):void
 		{
 			addSpriteToLayer(Start, obstaclesGroupstartGroup , 969.000, 360.000, 0.000, false, 1, 1, onAddCallback );//"start"
+		}
+
+		override public function addSpritesForLayerobstaclesGroupLayer5(onAddCallback:Function = null):void
+		{
+			addSpriteToLayer(CheckpointChecker, obstaclesGroupLayer5Group , 1131.000, 311.000, 0.000, false, 1, 1, onAddCallback );//"checkpointChecker"
+			addSpriteToLayer(CheckpointChecker, obstaclesGroupLayer5Group , 1518.000, 746.000, 0.000, false, 1, 1, onAddCallback );//"checkpointChecker"
+			addSpriteToLayer(CheckpointChecker, obstaclesGroupLayer5Group , 1308.000, 1207.000, 0.000, false, 1, 1, onAddCallback );//"checkpointChecker"
+			addSpriteToLayer(CheckpointChecker, obstaclesGroupLayer5Group , 583.000, 1091.000, 0.000, false, 1, 1, onAddCallback );//"checkpointChecker"
+			addSpriteToLayer(CheckpointChecker, obstaclesGroupLayer5Group , 490.000, 652.000, 0.000, false, 1, 1, onAddCallback );//"checkpointChecker"
+			addSpriteToLayer(CheckpointChecker, obstaclesGroupLayer5Group , 231.000, 507.000, 0.000, false, 1, 1, onAddCallback );//"checkpointChecker"
+			addSpriteToLayer(CheckpointChecker, obstaclesGroupLayer5Group , 587.000, 122.000, 0.000, false, 1, 1, onAddCallback );//"checkpointChecker"
 		}
 
 

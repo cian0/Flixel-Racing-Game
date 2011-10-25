@@ -16,12 +16,17 @@ package
 		protected var player:RacingCar;
 		protected var obstacleGroup:FlxGroup;
 		protected var checkpointGroup:FlxGroup;
+		public static var checkpointGraphicGroup:FlxGroup;
+		public static var lapFinished:uint = 0;
+		public static var hud:FlxGroup;
 		protected var playerHitArea:FlxSprite;
 		protected var playerGraphic:PlayerGraphic;
 		private var tmr:Timer;
 		private var tmrCtr:uint = 3;
 		private var ctr:uint = 0;
-		
+		private var ctr2:uint = 0;
+		[Embed(source = 'assets/topgear_philippines_small.jpg')]
+		protected var ImgLogo:Class;	
 		/*
 		 * for time. format is mmm:ss:ms
 		 * */
@@ -30,76 +35,52 @@ package
 		protected var ss:String;
 		protected var ms:String;
 		
-		protected var minutes:uint;
-		protected var seconds:uint;
-		protected var milliseconds:uint;
+		public static var minutes:uint;
+		public static var seconds:uint;
+		public static var milliseconds:uint;
+		
 		private var t:FlxText;
 		protected var lapTimer:Timer;
-		private var raceStart:int;
+		public static var raceStart:int;
 		protected var gameStarted:Boolean = false;
 		protected var timeElapsed:int;
-		protected var timeText:FlxText;
-		protected var hud:FlxGroup;
+		public static var timeText:FlxText;
+		//protected var hud:FlxGroup;
 		public function PlayState():void {
 			
 			obstacleGroup = new FlxGroup();
 			checkpointGroup = new FlxGroup();
+			checkpointGraphicGroup = new FlxGroup();
 			hud = new FlxGroup();
 			//FlxG.debug = true;
 			FlxG.debug = false;
 		}
 		override public function create():void
-
 		{
 			startGame();
 			t = new FlxText(0,FlxG.height/2-10,FlxG.width,"Ready!");
 			t.size = 16;
 			t.alignment = "center";
-			//t.font = "Arial";
 			add(t);
 			
-			//timeText = new FlxText(0, FlxG.height / 2 - 10, FlxG.width, "0:00:00");
 			timeText = new FlxText(FlxG.camera.scroll.x + 20, FlxG.camera.scroll.y +10, FlxG.width, "0:00:00");
 			timeText.size = 10;
 			timeText.alignment = "left";
 			
+			var topGearLogo:FlxSprite;
+			topGearLogo = new FlxSprite(FlxG.camera.scroll.x + 20, FlxG.camera.scroll.y +520);
+			//topGearLogo.loadGraphic(ImgLogo, false, true, 294, 106);
+			topGearLogo.loadGraphic(ImgLogo, false, true, 166, 60);
+			hud.add(topGearLogo);
+			
 			hud.add(timeText);
 			hud.setAll("scrollFactor", new FlxPoint(0, 0));
 			add(hud);
-			//lapTimer = new Timer (100);
-			//lapTimer.addEventListener(TimerEvent.TIMER, lapTimerListener);
+			
 			tmr = new Timer(1000, 4);
 			tmr.addEventListener(TimerEvent.TIMER, timerListener);
 			tmr.start();
 			
-		}
-		private function lapTimerListener():void {
-			
-			timeElapsed = getTimer() - raceStart;
-			
-			milliseconds = timeElapsed % 100;
-			ms = String(milliseconds);
-			seconds = timeElapsed / 1000;
-			ss = seconds % 60 < 10 ? "0" + String(seconds % 60) : String(seconds % 60);
-			minutes = seconds / 60;
-			mmm = String(minutes);
-			FlixelGame.currentRacingTime = mmm + ":" + ss + ":" + ms;
-			FlxG.log(FlixelGame.currentRacingTime);
-			timeText.text = FlixelGame.currentRacingTime;
-		}
-		private function timerListener(e:TimerEvent):void {
-			if (tmrCtr == 1)
-				t.text = "Start!";
-			else if (tmrCtr == 0) {
-				FlixelGame.gameStart = true;
-				raceStart = getTimer();
-				remove(t);
-				t.destroy();
-				tmr.removeEventListener(TimerEvent.TIMER, timerListener);
-			}else {
-				t.text = String(tmrCtr);
-			}
-			tmrCtr --;
 		}
 		private function startGame():void {
 			level1 = new Level_Road1(true, onSpriteAddedCallback);
@@ -134,7 +115,38 @@ package
 				checkpointGroup.add(sprite);
 				player.setMaxCheckpoints(ctr);
 			}
+			if (sprite is CheckpointChecker) {
+				checkpointGraphicGroup.add(sprite);
+				ctr2++;
+			}
+		}
+		private function lapTimerListener():void {
 			
+			timeElapsed = getTimer() - raceStart;
+			
+			milliseconds = timeElapsed % 100;
+			ms = String(milliseconds);
+			seconds = timeElapsed / 1000;
+			ss = seconds % 60 < 10 ? "0" + String(seconds % 60) : String(seconds % 60);
+			minutes = seconds / 60;
+			mmm = String(minutes);
+			FlixelGame.currentRacingTime = mmm + ":" + ss + ":" + ms;
+			FlxG.log(FlixelGame.currentRacingTime);
+			timeText.text = FlixelGame.currentRacingTime;
+		}
+		private function timerListener(e:TimerEvent):void {
+			if (tmrCtr == 1)
+				t.text = "Start!";
+			else if (tmrCtr == 0) {
+				FlixelGame.gameStart = true;
+				raceStart = getTimer();
+				remove(t);
+				t.destroy();
+				tmr.removeEventListener(TimerEvent.TIMER, timerListener);
+			}else {
+				t.text = String(tmrCtr);
+			}
+			tmrCtr --;
 		}
 		override public function update():void {
 			//trace (FlxG.camera.scroll.x);
@@ -184,12 +196,32 @@ package
 				player.currentCheckpoint = Start(checkpointHA).lapNo;
 			}else {
 				player.currentCheckpoint = Checkpoint(checkpointHA).lapNo;
+				if (player.currentCheckpoint == Checkpoint(checkpointHA).lapNo)
+					CheckpointChecker(checkpointGraphicGroup.members[Checkpoint(checkpointHA).lapNo]).frame = 4;
 			}
 			
 			//trace (checkpointHA.checkPoint.lapNo);
 		}
-
+		public static function resetCheckPointGraphics ():void {
+			
+			for (var i:uint = 0 ; i < checkpointGraphicGroup.length; i++ ) {
+				CheckpointChecker(checkpointGraphicGroup.members[i]).frame = 0;
+				//trace ("here");
+			}
+		}
+		public static function addTime():void {
+			if (timeText) {
+				//var t:FlxText = new FlxText(FlxG.camera.scroll.x + 20, FlxG.camera.scroll.y +10 + (30* lapFinished ), FlxG.width, timeText.text);
+				var t:FlxText = new FlxText(FlxG.width - 50, 10 + (20* lapFinished ), FlxG.width, timeText.text);
+				t.size = 10;
+				t.alignment = "left";
+				hud.add(t);
+				trace (FlxText( hud.members[1]).x)
+				hud.setAll("scrollFactor", new FlxPoint(0, 0));
+				lapFinished++;
+				raceStart = getTimer();
+			}
+		}
 	}
-
 }
 

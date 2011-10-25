@@ -20,6 +20,7 @@ package ph.com.topgear.car
 		}
 		public function setMaxCheckpoints(max:int):void{
 			maxCheckpoint = max;
+			
 		}
 		public function set currentCheckpoint (val:int):void {
 			if (val == targetCheckpoint) {
@@ -33,8 +34,11 @@ package ph.com.topgear.car
 					FlxG.log ("currentLap:" + currentLap);
 					if (currentLap == maxLaps) {
 						FlxG.log ("max laps reached!");
-						FlixelGame.stopTimer = true;
+						//FlixelGame.stopTimer = true;
+						
 					}
+					PlayState.addTime();
+					PlayState.resetCheckPointGraphics();
 				}
 			}else {
 				//FlxG.log ("invalid checkpoint");
