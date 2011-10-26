@@ -90,11 +90,32 @@ package ph.com.topgear.car
 			
 			if (isPlayer) {
 				//if (!skidding)
-					if (Math.round(speed + 0.2) > 0)
-						if (FlxG.keys.RIGHT)
-							angle += rotSpeed;
-						else if (FlxG.keys.LEFT) 
-							angle -= Math.abs (rotSpeed);			
+					if (Math.round(speed + 0.2) > 0) {
+						//trace ("Math.round(speed + 0.2");
+						if (FlxG.keys.UP){
+							if (FlxG.keys.RIGHT){
+								angle += rotSpeed;
+								
+							}
+							else if (FlxG.keys.LEFT) 
+								angle -= Math.abs (rotSpeed) + .3;			
+							//trace ("FlxG.keys.UP");
+						}
+						else if (FlxG.keys.DOWN) {
+							trace ("FlxG.keys.DOWN");
+							if (FlxG.keys.RIGHT)
+								angle -= rotSpeed;
+							else if (FlxG.keys.LEFT) 
+								angle += Math.abs (rotSpeed)+.3;			
+						}else {
+							if (FlxG.keys.RIGHT){
+								angle += rotSpeed;
+								
+							}
+							else if (FlxG.keys.LEFT) 
+								angle -= Math.abs (rotSpeed);	
+						}
+					}
 				//else	
 					//angle += rotSpeed;
 			}
@@ -112,9 +133,6 @@ package ph.com.topgear.car
 				rotSpeed = 0;
 			else
 				rotSpeed = 0.4 * (1 - realFriction);
-				
-			
-			
 		}
 	}
 }

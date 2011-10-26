@@ -15,7 +15,9 @@ package ph.com.topgear.obstacles
 
 		{
 			super(X, Y);
-			loadGraphic(ImgStart, true, true,20 , 143);
+			loadGraphic(ImgStart, false, true, 20 , 143);
+			
+			this.height = 143;
 		}
 		
 		override public function update():void

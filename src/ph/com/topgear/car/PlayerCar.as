@@ -54,6 +54,21 @@ package ph.com.topgear.car
 			if (!FlixelGame.gameStart)
 				return;
 			if (FlxG.keys.UP && !FlxG.keys.SPACE) {
+				if (FlxG.keys.RIGHT) {
+					if (Math.round (speed) > 0)
+						rotAccel = carRotationalAccel;
+					else
+						rotAccel = 0;
+				}
+				else if (FlxG.keys.LEFT) {
+					//if (int(Math.round (speed) )> 0){
+						rotAccel = -carRotationalAccel;
+						
+					//}
+					//else
+						//rotAccel = 0;
+						//trace ("up left");
+				}
 				if (!sand){
 					accel = carAccel;
 					
@@ -62,28 +77,45 @@ package ph.com.topgear.car
 					accel = carAccel * sandDrag;
 				}
 			}
-			if (FlxG.keys.DOWN && !FlxG.keys.SPACE) {
+			else if (FlxG.keys.DOWN && !FlxG.keys.SPACE) {
+				if (FlxG.keys.RIGHT) {
+					if (Math.round (speed) > 0)
+						rotAccel = carRotationalAccel;
+					else
+						rotAccel = 0;
+						//trace ("down right");
+				
+				}
+				else if (FlxG.keys.LEFT) {
+					if (int(Math.round (speed) )> 0){
+						rotAccel = -carRotationalAccel;
+					}
+					else
+						rotAccel = 0;
+						//trace ("down left");
+				}
 				if (!sand){
 				
 					accel = carDecel;
 				}else {
 					accel = carDecel * sandDrag;
 				}
-			}
-			if (FlxG.keys.RIGHT) {
-				if (Math.round (speed) > 0)
-					rotAccel = carRotationalAccel;
-				else
-					rotAccel = 0;
-			}
-			if (FlxG.keys.LEFT) {
-				if (int(Math.round (speed) )> 0){
-					rotAccel = -carRotationalAccel;
-					
+			}else
+		
+				if (FlxG.keys.RIGHT) {
+					if (Math.round (speed) > 0)
+						rotAccel = carRotationalAccel;
+					else
+						rotAccel = 0;
 				}
-				else
-					rotAccel = 0;
-			}
+				if (FlxG.keys.LEFT) {
+					if (int(Math.round (speed) )> 0){
+						rotAccel = -carRotationalAccel;
+					}
+					else
+						rotAccel = 0;
+				}
+			
 			
 			if (FlxG.keys.SPACE) {
 				realFriction = 1;
